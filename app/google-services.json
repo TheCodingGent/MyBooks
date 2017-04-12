@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "354539320529",
+    "project_id": "mybooks-375f3"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354539320529:android:cded2defe9a0a0da",
+        "android_client_info": {
+          "package_name": "com.example.fritzlor.mybooks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354539320529-ek6dgfbu0pctj8isspcvemjqml0gb6um.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "354539320529-ecr5jav80gt0lv8aagd2mp72b74h34v3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fritzlor.mybooks",
+            "certificate_hash": "37144f1f40f95a62bce02618bf6b94e978c159a7"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3psmfazooPdzkpvsRZgsEvZ_bwEpV-bw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="40dp"
+        android:text="Book Search"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="55dp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/etSearchBooks"
+                android:layout_height="45dp"
+
+                android:layout_marginRight="10dp"
+                android:textColorHint="@color/colorAccent"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/edittext_login_form"
+                android:hint="Search for books"/>
+
+            <Button
+                android:id="@+id/bSearch"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:background="@drawable/button_login_form"
+                android:text="Search"/>
+
+        </TableRow>
+    </TableLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="28dp"
+        android:text="Results"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
+</LinearLayout>
