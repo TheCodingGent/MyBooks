@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.fritzlor.mybooks.DataBase_Activities.LoginHelper;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -17,13 +20,14 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 
 public class Login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
-
+    final static String urlAddress="http://fritzlorauguste.000webhostapp.com/Login.php/";
     private static final String TAG = "LoginActivity";
     private static final int RC_SIGN_IN = 9001;
     public static final String ACC_INFO = "com.example.fritzlor.mybooks.ACC_INFO";
 
     private GoogleApiClient mGoogleApiClient;
     EditText etEmail, etPassword;
+    Button bLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +37,31 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         //views by id
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPassword = (EditText) findViewById(R.id.etPassword);
+        bLogin= (Button) findViewById(R.id.bLogin);
+
 
         // Button listeners
         findViewById(R.id.bSignIn).setOnClickListener(this);
         findViewById(R.id.bRegister).setOnClickListener(this);
+
+        bLogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                String usernameOrEmail=etEmail.getText().toString();
+                String password=etPassword.getText().toString();
+
+                //BASIC VALIDATION
+                if((usernameOrEmail.length()<=0 || usernameOrEmail==null) || (password.length()<=0 || password==null))
+                {
+                    Toast.makeText(Login.this, "Please fill all Fields", Toast.LENGTH_SHORT).show();
+                }else {
+                    new LoginHelper(Login.this,urlAddress,etEmail,etPassword).execute();
+                }
+            }
+
+
+                                                              });
 
 
         // Configure sign-in to request the user's ID, email address, and basic

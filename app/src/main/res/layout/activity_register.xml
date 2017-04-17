@@ -50,7 +50,7 @@
         android:layout_marginRight="32dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/edittext_login_form"
-        android:hint="Name"/>
+        android:hint="Full Name"/>
 
     <EditText
         android:id="@+id/etEmail"
@@ -74,6 +74,18 @@
         android:background="@drawable/edittext_login_form"
         android:inputType="textPassword"
         android:hint="Password"/>
+    <EditText
+        android:id="@+id/etConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/colorAccent"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/edittext_login_form"
+        android:inputType="textPassword"
+        android:hint="Confirm Password"/>
+
 
 
     <Button
