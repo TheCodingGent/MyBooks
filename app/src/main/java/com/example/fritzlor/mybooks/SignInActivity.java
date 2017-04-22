@@ -16,9 +16,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Login extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
     final static String TAG = "LOGIN_ACTIVITY";
+    public static final String USER_INFO = "com.example.fritzlor.mybooks.USER_INFO";
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -29,7 +30,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_signin);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -63,7 +64,7 @@ public class Login extends AppCompatActivity {
                 //BASIC VALIDATION
                 if(email.length()<=0 || password.length()<=0)
                 {
-                    Toast.makeText(Login.this,"Please Enter all data correctly",
+                    Toast.makeText(SignInActivity.this,"Please Enter all data correctly",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     signIn(email, password);
@@ -74,7 +75,7 @@ public class Login extends AppCompatActivity {
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, Register.class);
+                Intent intent = new Intent(SignInActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -94,10 +95,10 @@ public class Login extends AppCompatActivity {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(Login.this, "Failed to authorize user",
+                            Toast.makeText(SignInActivity.this, "Failed to authorize user",
                                     Toast.LENGTH_SHORT).show();
                         }else{
-                            Intent intent = new Intent(Login.this, Dashboard.class);
+                            Intent intent = new Intent(SignInActivity.this, DashboardActivity.class);
                             startActivity(intent);
                         }
 

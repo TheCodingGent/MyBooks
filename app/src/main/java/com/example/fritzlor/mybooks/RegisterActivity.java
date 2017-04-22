@@ -15,14 +15,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
-public class Register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     final static String TAG = "REGISTER_ACTIVITY";
 
     private EditText etUserName, etEmail, etPassword, etConfirmPassword;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
     Button bRegister;
 
     @Override
@@ -30,50 +32,62 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        mAuth = FirebaseAuth.getInstance();
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-                // ...
-            }
-        };
-
         etUserName = (EditText) findViewById(R.id.etUserName);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etConfirmPassword = (EditText) findViewById(R.id.etConfirmPassword);
         bRegister= (Button) findViewById(R.id.bLogin);
 
+        FirebaseAuth.getInstance().signOut();
+
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user!=null){
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(etUserName.getText().toString())
+                            //.setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))
+                            .build();
+
+                    user.updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d(TAG, "User profile updated.");
+                                    }
+                                }
+                            });
+                    Intent intent = new Intent(RegisterActivity.this, SignInActivity.class);
+                    startActivity(intent);
+                }
+            }
+        };
 
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String userame = etUserName.getText().toString();
+                String username = etUserName.getText().toString();
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
                 String confirmPwd=etConfirmPassword.getText().toString();
 
                 //BASIC VALIDATION
-                if(userame.length()<=0 || email.length()<=0 || password.length()<=0)
+                if(username.length()<=0 || email.length()<=0 || password.length()<=0)
                 {
-                    Toast.makeText(Register.this,"Please Enter all data correctly",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,"Please Enter all data correctly",Toast.LENGTH_SHORT).show();
                 }
                 else if(!password.equals(confirmPwd))
                 {
-                    Toast.makeText(Register.this,"Password does not match",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,"Password does not match",Toast.LENGTH_SHORT).show();
 
                 }else {
                     createAccount(email, password);
+
                 }
             }
         });
@@ -90,12 +104,11 @@ public class Register extends AppCompatActivity {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(Register.this, "Registration Failed",
+                            Toast.makeText(RegisterActivity.this, "Registration Failed",
                                     Toast.LENGTH_SHORT).show();
+                        }else{
+                            //registration successful.
                         }
-
-                        Intent intent = new Intent(Register.this, Login.class);
-                        startActivity(intent);
                     }
                 });
 

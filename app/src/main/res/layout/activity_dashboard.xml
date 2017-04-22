@@ -1,65 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvWelcomeText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textSize="35sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:text="Welcome"/>
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Welcome "
+        android:textColor="@color/white"/>
+
     <Button
-        android:id="@+id/bSignOut"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/white"
-        android:background="@drawable/button_login_form"
-        android:text="Sign Out" />
+        android:id="@+id/bSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="55dp" />
+        android:layout_height="50dp" />
 
-    <TableLayout
+    <ScrollView
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_height="300dp">
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/etSearchBooks"
-                android:layout_height="45dp"
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
 
-                android:layout_marginRight="10dp"
-                android:textColorHint="@color/colorAccent"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/edittext_login_form"
-                android:hint="Search for books"/>
-
-            <Button
-                android:id="@+id/bSearch"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/white"
-                android:background="@drawable/button_login_form"
-                android:text="Search"/>
-
-        </TableRow>
-    </TableLayout>
     <Space
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="50dp" />
+
+    <Button
+        android:id="@+id/bPostDash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Post" />
 
 </LinearLayout>
 
