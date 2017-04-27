@@ -32,7 +32,6 @@ public class PostActivity extends AppCompatActivity {
     RadioGroup radioGroup;
     Button bPost;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
