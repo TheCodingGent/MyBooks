@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,12 +25,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity {
 
     final static String TAG = "DASHBOARD_ACTIVITY";
-
+    String[] t1={"video1","video2","video1","video2","video1","video2","video1","video2"};
+    String[] d1={"lesson1","lesson2","lesson1","lesson2","lesson1","lesson2","lesson1","lesson2"};
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser currentUser;
@@ -40,7 +41,8 @@ public class DashboardActivity extends AppCompatActivity {
     private Button bPostDash;
     private ListView lvBooks;
 
-    private List<String> mPosts;
+    private ArrayList<String> mPosts;
+    private ArrayList<String> aPosts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +62,9 @@ public class DashboardActivity extends AppCompatActivity {
 
         // Instanciating an array list
         mPosts = new ArrayList<>();
+        aPosts = new ArrayList<>();
 
-        // This is the array adapter, it takes the context of the activity as a
-        // first parameter, the type of list view as a second parameter and your
-        // array as a third parameter.
-        ArrayAdapter<String> mListAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                mPosts);
-
-        lvBooks.setAdapter(mListAdapter);
+        lvBooks.setAdapter(new PostAdapterActivity(mPosts,aPosts));
 
         bPostDash.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +110,7 @@ public class DashboardActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Post post = postSnapshot.getValue(Post.class);
                     mPosts.add(post.book.title);
+                    aPosts.add(post.book.author);
                     ((BaseAdapter)lvBooks.getAdapter()).notifyDataSetChanged();
                 }
             }
@@ -146,4 +142,53 @@ public class DashboardActivity extends AppCompatActivity {
             mPostReference.removeEventListener(mPostListener);
         }
     }
+
+
+
+
+    public class PostAdapterActivity extends BaseAdapter{
+
+        ArrayList<String> Title, Author;
+
+        public PostAdapterActivity(ArrayList<String> title, ArrayList<String> author) {
+            Title = title;
+            Author = author;
+
+        }
+
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return Title.size();
+        }
+        public Object getTitle() {
+            // TODO Auto-generated method stub
+            return Title;
+        }
+        public Object getItem(int arg0) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+
+            return position;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+                LayoutInflater inflater = getLayoutInflater();
+                View row;
+                row = inflater.inflate(R.layout.activity_poast_adapter, parent, false);
+                TextView tvtitle, tvauthor;
+                tvtitle = (TextView) row.findViewById(R.id.tvTitleADPT);
+                tvauthor = (TextView) row.findViewById(R.id.tvAuthorADPT);
+                tvtitle.setText(Title.get(position));
+                tvauthor.setText(" By: "+ Author.get(position));
+
+            return (row);
+        }
+
+    }
+
 }

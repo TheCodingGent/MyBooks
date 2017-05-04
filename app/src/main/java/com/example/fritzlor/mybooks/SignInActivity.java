@@ -17,13 +17,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignInActivity extends AppCompatActivity {
-
+    //Variable Declaration
     final static String TAG = "LOGIN_ACTIVITY";
     public static final String USER_INFO = "com.example.fritzlor.mybooks.USER_INFO";
-
+    //Database Variable
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
+    //Layout variables ID
     EditText etEmail, etPassword;
     Button bLogin, bRegister;
 
@@ -31,6 +31,11 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+        //Connecting layout ID to proper variable
+        etEmail = (EditText)findViewById(R.id.etEmail);
+        etPassword = (EditText)findViewById(R.id.etPassword);
+        bLogin = (Button)findViewById(R.id.bSignIn);
+        bRegister = (Button)findViewById(R.id.bRegister);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -49,10 +54,6 @@ public class SignInActivity extends AppCompatActivity {
             }
         };
 
-        etEmail = (EditText)findViewById(R.id.etEmail);
-        etPassword = (EditText)findViewById(R.id.etPassword);
-        bLogin = (Button)findViewById(R.id.bSignIn);
-        bRegister = (Button)findViewById(R.id.bRegister);
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override

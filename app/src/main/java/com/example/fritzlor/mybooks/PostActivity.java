@@ -22,11 +22,12 @@ import java.util.UUID;
 
 public class PostActivity extends AppCompatActivity {
 
+    //Database Variables
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser currentUser;
     private DatabaseReference mDatabase;
-
+    //Layout Variables
     EditText etBookTitle, etBookAuthor, etBookDescription, etBookPrice;
     RadioButton rbNew, rbUsed;
     RadioGroup radioGroup;

@@ -20,12 +20,11 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 public class RegisterActivity extends AppCompatActivity {
 
     final static String TAG = "REGISTER_ACTIVITY";
-
+    //Layout Variables
     private EditText etUserName, etEmail, etPassword, etConfirmPassword;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
-    Button bRegister;
+    private Button bRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
