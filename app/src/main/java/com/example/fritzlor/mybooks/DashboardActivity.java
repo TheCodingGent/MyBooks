@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -29,8 +30,6 @@ import java.util.ArrayList;
 public class DashboardActivity extends AppCompatActivity {
 
     final static String TAG = "DASHBOARD_ACTIVITY";
-    String[] t1={"video1","video2","video1","video2","video1","video2","video1","video2"};
-    String[] d1={"lesson1","lesson2","lesson1","lesson2","lesson1","lesson2","lesson1","lesson2"};
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser currentUser;
@@ -38,10 +37,11 @@ public class DashboardActivity extends AppCompatActivity {
     private DatabaseReference mPostReference;
     private ValueEventListener mPostListener;
 
+    public ArrayList<String> Title, Author, Condition, Price, Description;
     private Button bPostDash;
     private ListView lvBooks;
 
-    private ArrayList<String> mPosts;
+    private ArrayList<String> mPosts,dPosts,cPosts,pPosts;
     private ArrayList<String> aPosts;
 
     @Override
@@ -63,8 +63,30 @@ public class DashboardActivity extends AppCompatActivity {
         // Instanciating an array list
         mPosts = new ArrayList<>();
         aPosts = new ArrayList<>();
+        pPosts = new ArrayList<>();
+        cPosts = new ArrayList<>();
+        dPosts = new ArrayList<>();
 
-        lvBooks.setAdapter(new PostAdapterActivity(mPosts,aPosts));
+        lvBooks.setAdapter(new PostAdapterActivity(mPosts,aPosts,cPosts,dPosts,pPosts));
+        lvBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                           long id) {
+                Intent Info = new Intent(DashboardActivity.this, PopUpInfoActivity.class);
+               /* Log.d(Title.get(position), "TITLE");  THESE WERE MEANT FOR DEBUGGING
+                Log.d(Author.get(position), "AUTHOR");
+                Log.d(Condition.get(position), "CONDITION");
+                Log.d(Description.get(position), "DESCRIPTION");
+                Log.d(Price.get(position), "PRICE");*/
+                Info.putExtra("Title",Title.get(position));
+                Info.putExtra("Author",Author.get(position));
+                Info.putExtra("Condition",Condition.get(position));
+                Info.putExtra("Description",Description.get(position));
+                Info.putExtra("Price",Price.get(position));
+
+                startActivity(Info);
+            }
+        });
 
         bPostDash.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +133,9 @@ public class DashboardActivity extends AppCompatActivity {
                     Post post = postSnapshot.getValue(Post.class);
                     mPosts.add(post.book.title);
                     aPosts.add(post.book.author);
+                    pPosts.add(post.book.price);
+                    dPosts.add(post.book.description);
+                    cPosts.add(post.book.condition);
                     ((BaseAdapter)lvBooks.getAdapter()).notifyDataSetChanged();
                 }
             }
@@ -148,11 +173,14 @@ public class DashboardActivity extends AppCompatActivity {
 
     public class PostAdapterActivity extends BaseAdapter{
 
-        ArrayList<String> Title, Author;
-
-        public PostAdapterActivity(ArrayList<String> title, ArrayList<String> author) {
+        public PostAdapterActivity(ArrayList<String> title, ArrayList<String> author ,
+                                   ArrayList<String> condition, ArrayList<String> description,
+                                   ArrayList<String> price ) {
             Title = title;
             Author = author;
+            Condition = condition;
+            Description = description;
+            Price = price;
 
         }
 
@@ -177,18 +205,17 @@ public class DashboardActivity extends AppCompatActivity {
 
         public View getView(int position, View convertView, ViewGroup parent) {
 
-                LayoutInflater inflater = getLayoutInflater();
-                View row;
-                row = inflater.inflate(R.layout.activity_poast_adapter, parent, false);
-                TextView tvtitle, tvauthor;
-                tvtitle = (TextView) row.findViewById(R.id.tvTitleADPT);
-                tvauthor = (TextView) row.findViewById(R.id.tvAuthorADPT);
-                tvtitle.setText(Title.get(position));
-                tvauthor.setText(" By: "+ Author.get(position));
+            LayoutInflater inflater = getLayoutInflater();
+            View row;
+            row = inflater.inflate(R.layout.activity_post_adapter, parent, false);
+            TextView tvtitle, tvauthor;
+            tvtitle = (TextView) row.findViewById(R.id.tvTitleADPT);
+            tvauthor = (TextView) row.findViewById(R.id.tvAuthorADPT);
+            tvtitle.setText(Title.get(position));
+            tvauthor.setText(" By: " + Author.get(position));
 
             return (row);
         }
-
     }
 
 }
